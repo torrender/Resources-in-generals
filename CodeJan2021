@@ -1,0 +1,18 @@
+Library(rpart.plot)
+Library(MASS)
+Library(Informationvalue)
+warfare=read.csv(file.choose().header=TRUE)
+n=nrow(warfare)
+train=sample(1:n,n/2)
+warfare.test=warfare[-train,]
+warfare.train=warfare[train,]
+fit.1=rpart(VorD~Infantry,data=warfare.train,method='class')
+logitwarface=glm(VorD~Infantry,family=Binomial(link="logit"),data=warfare.train)
+QDA.Warfare<-qda(VorD~Infantry,data=warfare,train)
+LDA.Warfare<-LDA(VorD~Infantry,data=warfare,train)
+predicted1 <-predict(LDA.Warfare,warfare.test,train)
+output1 <- matrix(unlist(predicted1),ncol=2,byrow=true)
+mean(warfare.test$VorD != ifelse(output1=0.5,0.1))
+predicted2 <-predict(QDA.Warfare,warfare.test,train)
+output2 <- matrix(unlist(predicted2),ncol=2,byrow=true)
+mean(warfare.test$VorD != ifelse(output1=0.5,0.1))
